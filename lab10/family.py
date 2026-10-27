@@ -6,6 +6,15 @@ class Person:
         self.mom = mom
         self.dad = dad
 
+    def print_family_tree(self, prefix="", level=0):
+        """Print the family tree starting from this person."""
+        indent = "    " * level
+        print(f"{prefix}{self.name} {self.born or '?'}-{self.died or '?'}")
+        if self.mom:
+            self.mom.print_family_tree(f"  {indent}mom: ", level + 1)
+        if self.dad:
+            self.dad.print_family_tree(f"  {indent}dad: ", level + 1)
+
     def is_sibling_of(self, other):
         same_mom = self.mom is not None and other.mom is not None and self.mom is other.mom
         same_dad = self.dad is not None and other.dad is not None and self.dad is other.dad
@@ -85,3 +94,12 @@ print(adele.is_sibling_of(joseph))  # should be true
 print(joseph.is_sibling_of(adele))  # should be true
 print(salvatore.is_sibling_of(louise))  # should be false
 print(paul.is_sibling_of(adele))
+
+
+p3 = Person("Marie Ramos")
+p4 = Person("Jacques Martinez")
+p1 = Person("Adele Martinez", mom=p3, dad=p4)
+p2 = Person("Joseph Martinez", mom=p3, dad=p4)
+print(p1.is_sibling_of(p2))
+
+leo.print_family_tree()
